@@ -2,21 +2,17 @@
 
 (defn my-map
   [f coll]
-  (reverse (reduce
-    (fn [acc elem]
-      (if (list? acc)
-        (conj acc (f elem))
-        (conj (list (f acc)) (f elem))))
-    coll)))
+  (reduce
+    (fn [acc elem] (concat acc (list (f elem))))
+    ()
+    coll))
 
 (defn my-filter
   [p coll]
-  (reverse (reduce
-    (fn [acc elem]
-      (if (list? acc)
-        (if (p elem) (conj acc elem) acc)
-        (let [ini (if (p acc) (list acc) (list))] (if (p elem) (conj ini elem) ini))))
-    coll)))
+  (reduce
+    (fn [acc elem] (if (p elem) (concat acc (list elem)) acc))
+    ()
+    coll))
 
 (println (my-map (fn [x] (* x 3)) (range 5)))
 (println (my-map inc [1 2 3 4 5]))
