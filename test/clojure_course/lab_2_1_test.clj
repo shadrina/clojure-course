@@ -29,6 +29,8 @@
 
 (deftest time-test
   (testing "testing time optimization"
+    (println "load classes:")
+    (println (time ((integral sqr) 10)))
     (println "sqr with integral:")
     (println (time ((integral sqr) 1)))
     (println (time ((integral sqr) 2)))
