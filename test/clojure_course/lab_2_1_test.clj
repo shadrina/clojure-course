@@ -2,7 +2,7 @@
   (:require [clojure.test :refer :all]
             [clojure-course.lab-2-1 :refer :all]))
 
-(def eps 0.01)
+(def eps 0.001)
 
 (defn almost-equal [a b]
   (< (- (max a b) (min a b)) eps))
@@ -11,22 +11,18 @@
 (defn line [x] x)
 (defn sqr [x] (* x x))
 
-(deftest integral-test
-  (testing "testing integral")
-  (is (= ((integral const) 1) 2))
-  (is (= 0 1)))
+(deftest const-test
+  (testing "testing integral with const"
+    (is (almost-equal 1.0 ((integral const) 1)))
+    (is (almost-equal 2.0 ((integral const) 2)))))
 
-;(deftest task21-test-simple
-;  (testing "task21 test simple function"
-;    (let [f (integr (fn [_] 2))]
-;      (is (= (f 1) 2.0))
-;      (is (= (f 2) 4.0))
-;      (is (= (f 5) 10.0)))
-;    (let [f (integr (fn [x] x))]
-;      (is (= (f 1) 0.5))
-;      (is (= (f 2) 2.0))
-;      (is (= (f 5) 12.5)))
-;    (let [f (integr (fn [x] (* x x))) epsilon 0.001]
-;      (is (almost-equal (f 1) (xxs 1) epsilon))
-;      (is (almost-equal (f 2) (xxs 2) epsilon))
-;      (is (almost-equal (f 5) (xxs 5) epsilon)))))
+(deftest line-test
+  (testing "testing integral with line"
+    (is (almost-equal 0.5 ((integral line) 1)))
+    (is (almost-equal 2.0 ((integral line) 2)))
+    (is (almost-equal 96.605 ((integral line) 13.9)))))
+
+(deftest sqr-test
+  (testing "testing integral with sqr"
+    (is (almost-equal 0.333 ((integral sqr) 1)))
+    (is (almost-equal 576 ((integral sqr) 12)))))

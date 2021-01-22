@@ -1,6 +1,6 @@
 (ns clojure-course.lab-2-1)
 
-(def step 0.05)
+(def step 0.005)
 
 (defn trapezoidal-rule
   [fa fb]
@@ -17,7 +17,8 @@
 (defn integral-i
   [f n]
   (if (> n 0)
-    (+ (integral-i f (dec n)) (trapezoidal-rule-i f n))
+    (let [partial-sum (trapezoidal-rule-i f n)]
+      (+ (integral-i f (dec n)) partial-sum))
     0))
 
 (def memoized-integral
@@ -25,7 +26,9 @@
 
 (defn integral
   [f]
-  (fn [x] (memoized-integral f (calc-n x))))
+  (fn [x] (let [steps (calc-n x)]
+            (memoized-integral f steps)
+            )))
 
 
 
