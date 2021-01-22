@@ -21,14 +21,18 @@
       (+ (integral-i f (dec n)) partial-sum))
     0))
 
-(def memoized-integral
-  (memoize integral-i))
-
 (defn integral
   [f]
   (fn [x] (let [steps (calc-n x)]
-            (memoized-integral f steps)
-            )))
+            (integral-i f steps))))
+
+(def memoized-integral-i
+  (memoize integral-i))
+
+(defn memoized-integral
+  [f]
+  (fn [x] (let [steps (calc-n x)]
+            (memoized-integral-i f steps))))
 
 
 
