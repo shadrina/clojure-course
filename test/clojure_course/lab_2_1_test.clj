@@ -37,5 +37,8 @@
     (println (time ((integral sqr) 3)))
     (println "sqr with memoized integral:")
     (println (time ((memoized-integral sqr) 1)))
+    (println (time ((memoized-integral sqr) 1)))
     (println (time ((memoized-integral sqr) 2)))
+    (println (time ((memoized-integral sqr) 2)))
+    (println (time ((memoized-integral sqr) 3)))
     (println (time ((memoized-integral sqr) 3)))))
