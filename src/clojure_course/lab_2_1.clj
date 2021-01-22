@@ -33,7 +33,3 @@
   [f]
   (fn [x] (let [steps (calc-n x)]
             (memoized-integral-i f steps))))
-
-
-
-

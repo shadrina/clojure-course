@@ -2,6 +2,11 @@
   (:require [clojure.test :refer :all]
             [clojure-course.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(def eps 0.001)
+
+(defn almost-equal [a b]
+  (< (- (max a b) (min a b)) eps))
+
+(defn const [_] 1)
+(defn line [x] x)
+(defn sqr [x] (* x x))
