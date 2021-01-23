@@ -1,6 +1,6 @@
 (ns clojure-course.lab-3-1)
 
-(def threads 8)
+(def threads 10)
 
 (defn my-partition
   ([n coll] (let [c (count coll)
@@ -9,17 +9,15 @@
   ([batch-size coll current-step steps]
    (if (= current-step 0)
      (list)
-     (lazy-seq
-       (cons (take batch-size coll) (my-partition batch-size (drop batch-size coll) (dec current-step) steps))))))
+     (cons (take batch-size coll) (my-partition batch-size (drop batch-size coll) (dec current-step) steps)))))
 
 (defn my-pmap [f batches]
   (->>
     (map #(future (f %)) batches)
     (doall)
-    (map deref)
-    (doall)))
+    (map deref)))
 
 (defn pfilter
-  [pred coll] (->> (partition threads coll)
-                   (my-pmap #(filter pred %))
+  [pred coll] (->> (my-partition threads coll)
+                   (my-pmap #(doall (filter pred %)))
                    (apply concat)))
