@@ -7,7 +7,9 @@
                (fn [[sum i]] [(+ sum (trapezoidal-rule-i f (inc i))) (inc i)])
                [0 0])))
 
+(def memoized-lazy-partial-integral-sums (memoize lazy-partial-integral-sums))
+
 (defn integral-partial-sums
   [f]
   (fn [x] (let [n (calc-n x)]
-            (nth (lazy-partial-integral-sums f) n))))
+            (nth (memoized-lazy-partial-integral-sums f) n))))
